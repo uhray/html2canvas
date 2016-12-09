@@ -868,6 +868,18 @@ _html2canvas.Parse = function (images, options) {
       );
   }
 
+  function renderBlendMode(element, ctx) {
+    var mode = getCSS(element, 'mix-blend-mode'),
+        lookup = {
+          normal: 'source-over'
+        };
+
+    ctx.setVariable(
+      'globalCompositeOperation',
+      lookup[mode] || mode || 'source-over'
+    );
+  }
+
   function renderBackgroundRepeating(el, bounds, ctx, image, imageIndex) {
     var backgroundSize = Util.BackgroundSize(el, bounds, image, imageIndex),
     backgroundPosition = Util.BackgroundPosition(el, bounds, image, imageIndex, backgroundSize),
@@ -1035,6 +1047,7 @@ _html2canvas.Parse = function (images, options) {
 
 
     createShape(ctx, borderData.clip);
+    renderBlendMode(element, ctx);
 
     ctx.save();
     ctx.clip();
