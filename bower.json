@@ -1,6 +1,6 @@
 {
     "name": "html2canvas",
-    "version": "0.4.3",
+    "version": "0.4.4",
     "description": "Screenshots with JavaScript",
     "main": "build/html2canvas.js",
     "ignore": [

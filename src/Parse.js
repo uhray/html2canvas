@@ -204,16 +204,13 @@ _html2canvas.Parse = function (images, options) {
           var esc = unicodeEscape(word);
           if (/\\u/.test(esc)) {
             runningWord = (runningWord || '') + word;
-            console.log('running word', runningWord, esc);
             runningWordCount++;
           } else {
             if (runningWordCount) {
               runningTextList.push(runningWord);
-              console.log('push runningWord', runningWord, esc);
             }
             runningWord = '';
             runningWordCount = 0;
-            console.log('running normal word', word);
             runningTextList.push(word);
           }
         });
