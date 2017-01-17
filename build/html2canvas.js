@@ -1,7 +1,8 @@
 /*
-  html2canvas 0.4.2 <http://html2canvas.hertzen.com>
-  Copyright (c) 2013 Niklas von Hertzen
-  Released under MIT License
+  <%= pkg.title || pkg.name %> <%= pkg.version %><%= pkg.homepage ? " <" + pkg.homepage + ">" : "" %>
+  Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>
+
+  Released under <%= _.pluck(pkg.licenses, "type").join(", ") %> License
 */
 
 (function(window, document, undefined){
@@ -1234,16 +1235,13 @@ _html2canvas.Parse = function (images, options) {
           var esc = unicodeEscape(word);
           if (/\\u/.test(esc)) {
             runningWord = (runningWord || '') + word;
-            console.log('running word', runningWord, esc);
             runningWordCount++;
           } else {
             if (runningWordCount) {
               runningTextList.push(runningWord);
-              console.log('push runningWord', runningWord, esc);
             }
             runningWord = '';
             runningWordCount = 0;
-            console.log('running normal word', word);
             runningTextList.push(word);
           }
         });
