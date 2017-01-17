@@ -1,10 +1,8 @@
 /*
-  <%= pkg.title || pkg.name %> <%= pkg.version %><%= pkg.homepage ? " <" + pkg.homepage + ">" : "" %>
-  Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>
-
-  Released under <%= _.pluck(pkg.licenses, "type").join(", ") %> License
+  html2canvas 0.4.2 <http://html2canvas.hertzen.com>
+  Copyright (c) 2013 Niklas von Hertzen
+  Released under MIT License
 */
-
 (function(window, document, undefined){
 
 "use strict";
