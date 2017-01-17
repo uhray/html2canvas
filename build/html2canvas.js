@@ -1204,7 +1204,10 @@ _html2canvas.Parse = function (images, options) {
     state = {
       node: textNode,
       textOffset: 0
-    };
+    },
+    runningTextList = [],
+    runningWordCount = 0,
+    runningWord;
 
     if (Util.trimText(textNode.nodeValue).length > 0) {
       textNode.nodeValue = textTransform(textNode.nodeValue, getCSS(el, "textTransform"));
@@ -1224,6 +1227,29 @@ _html2canvas.Parse = function (images, options) {
             textList.splice.apply(textList, word);
           }
         });
+      }
+
+      if (options.allowEmojis) {
+        textList.forEach(function(word, index) {
+          var esc = unicodeEscape(word);
+          if (/\\u/.test(esc)) {
+            runningWord = (runningWord || '') + word;
+            console.log('running word', runningWord, esc);
+            runningWordCount++;
+          } else {
+            if (runningWordCount) {
+              runningTextList.push(runningWord);
+              console.log('push runningWord', runningWord, esc);
+            }
+            runningWord = '';
+            runningWordCount = 0;
+            console.log('running normal word', word);
+            runningTextList.push(word);
+          }
+        });
+
+        if (runningWord) runningTextList.push(runningWord);
+        textList = runningTextList;
       }
 
       textList.forEach(function(text, index) {
@@ -2173,6 +2199,14 @@ _html2canvas.Parse = function (images, options) {
       backgroundColor: background,
       stack: stack
     };
+  }
+
+  function unicodeEscape(str) {
+    return str.replace(/[\s\S]/g, function(character) {
+      var escape = character.charCodeAt().toString(16),
+          longhand = escape.length > 2;
+      return '\\' + (longhand ? 'u' : 'x') + ('0000' + escape).slice(longhand ? -4 : -2);
+    });
   }
 
   return init();

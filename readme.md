@@ -36,6 +36,7 @@ To render an `element` with html2canvas, simply call:
 To access the created canvas, provide the `onrendered` event in the options which returns the canvas element as the first argument, as such:
 
     html2canvas(document.body, {
+        allowEmojis: false,
         onrendered: function(canvas) {
             /* canvas is the actual canvas element,
                to append it to the page call for example
