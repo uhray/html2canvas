@@ -24,7 +24,8 @@
     var gradient, i, len = reGradients.length, m1, stop, m2, m2Len, step, m3, tl,tr,br,bl;
 
     for(i = 0; i < len; i+=1){
-      m1 = css.match(reGradients[i]);
+      m1 = css.replace(/transparent/ig, 'rgba(0, 0, 0, 0)')
+              .match(reGradients[i]);
       if(m1) {
         break;
       }

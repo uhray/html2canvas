@@ -1,8 +1,10 @@
 /*
-  html2canvas 0.4.2 <http://html2canvas.hertzen.com>
-  Copyright (c) 2013 Niklas von Hertzen
-  Released under MIT License
+  html2canvas 0.5.0-beta3 <http://html2canvas.hertzen.com>
+  Copyright (c) 2016 Niklas von Hertzen
+
+  Released under  License
 */
+
 (function(window, document, undefined){
 
 "use strict";
@@ -506,7 +508,8 @@ _html2canvas.Util.Font = (function () {
     var gradient, i, len = reGradients.length, m1, stop, m2, m2Len, step, m3, tl,tr,br,bl;
 
     for(i = 0; i < len; i+=1){
-      m1 = css.match(reGradients[i]);
+      m1 = css.replace(/transparent/ig, 'rgba(0, 0, 0, 0)')
+              .match(reGradients[i]);
       if(m1) {
         break;
       }
@@ -904,6 +907,7 @@ _html2canvas.Util.Font = (function () {
     return roman;
   };
 })();
+
 function h2cRenderContext(width, height) {
   var storage = [];
   return {
