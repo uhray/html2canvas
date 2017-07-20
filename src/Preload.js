@@ -166,6 +166,7 @@ _html2canvas.Preload = function( options ) {
 
   function setImageLoadHandlers(img, imageObj) {
     img.onload = function() {
+      console.log('IMAGE LOADED');
       if ( imageObj.timer !== undefined ) {
         // CORS succeeded
         window.clearTimeout( imageObj.timer );
@@ -229,6 +230,9 @@ _html2canvas.Preload = function( options ) {
           };
           images.numTotal++;
           setImageLoadHandlers(img, imageObj);
+          if ( options.addCacheBust ) {
+            src += '?cacheBust=' + Date.now();
+          }
           img.src = src;
         } else if ( options.proxy ) {
           imageObj = images[src] = {
