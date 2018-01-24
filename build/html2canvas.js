@@ -1,6 +1,6 @@
 /*
   html2canvas 0.4.6 <http://html2canvas.hertzen.com>
-  Copyright (c) 2017 Niklas von Hertzen
+  Copyright (c) 2018 Niklas von Hertzen
 
   Released under MIT License
 */
@@ -2387,7 +2387,6 @@ _html2canvas.Preload = function( options ) {
 
   function setImageLoadHandlers(img, imageObj) {
     img.onload = function() {
-      console.log('IMAGE LOADED');
       if ( imageObj.timer !== undefined ) {
         // CORS succeeded
         window.clearTimeout( imageObj.timer );
@@ -2452,10 +2451,11 @@ _html2canvas.Preload = function( options ) {
           images.numTotal++;
           setImageLoadHandlers(img, imageObj);
           if ( options.addCacheBust ) {
-            src += '?cacheBust=' + Date.now();
-            console.log('cache bust', src);
-          } else {
-            console.log('NO CACHE BUST');
+            if (/\?/.test(src)) {
+              src += '&cacheBustHtml2Canvas=' + Date.now();
+            } else {
+              src += '?cacheBustHtml2Canvas=' + Date.now();
+            }
           }
           img.src = src;
         } else if ( options.proxy ) {
